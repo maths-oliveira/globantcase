@@ -6,14 +6,15 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    if request.method == 'GET':
-        return main_handler.index()
+    main_handler.index()
 
-    files = request.files.getlist('files')
-    file_names = main_helper.upload_files_to_gcs(files)
-    main_helper.create_bq_table(file_names)
+@app.route('/backup', methods=['GET'])
+def backup():
+    main_handler.backup()
 
-    return 'Database updated'
+@app.route('/restore', methods=['GET'])
+def restore():
+    main_handler.restore()
 
 
 
