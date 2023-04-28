@@ -1,6 +1,7 @@
 from src import config
 from google.cloud import storage, bigquery
 from google.cloud.bigquery import ExternalConfig, Table
+import pandas as pd
 
 
 def upload_files_to_gcs(files):
@@ -82,3 +83,11 @@ def import_dataset_tables_from_gcs():
 
         load_job = bq_client.load_table_from_uri(uri, table_id, job_config=job_config)
         load_job.result()
+
+
+def append_data_in_bq(table, table_data):
+    df = pd.DataFrame.from_dict(table_data)
+    table_id = f'{config.PROJECT_NAME}.{config.BIG_QUERY_DATASET}.{table}'
+    job = bigquery.Client().load_table_from_dataframe(df, table_id)
+    job.result()
+

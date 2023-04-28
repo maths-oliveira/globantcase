@@ -16,6 +16,18 @@ def backup():
 def restore():
     main_handler.restore()
 
+@app.route('/update', methods=['POST'])
+def update():
+    main_handler.update()
+
+
+@app.route('/update', methods=['POST'])
+def update():
+    main_handler.update()
+
+@app.route('/update', methods=['POST'])
+def update():
+    main_handler.update()
 
 
 

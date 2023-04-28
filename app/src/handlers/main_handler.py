@@ -1,5 +1,6 @@
-from flask import request, render_template
+from flask import request, render_template, jsonify
 from src.helpers import main_helper
+import pandas as pd
 
 def index():
     if request.method == 'GET':
@@ -21,3 +22,20 @@ def restore():
     main_helper.import_dataset_tables_from_gcs()
 
     return 'Restoration done'
+
+
+def update():
+    data = request.data.decode()
+    tables = data['tables']
+    for table, table_data in tables:
+        main_helper.append_data_in_bq(table, table_data)
+
+
+
+
+
+
+
+
+
+
